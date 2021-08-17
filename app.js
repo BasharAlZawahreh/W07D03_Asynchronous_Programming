@@ -60,8 +60,8 @@ console.log('P Q1')
 
 const fsPromises = fs.promises;
 const appendToFile = (data) => {
-    fsPromises.appendFile('data.txt',data, ()=>{
-        console.log("Data has been appended \n");
+    fsPromises.appendFile('data.txt', `\n ${data}`, ()=>{
+        console.log(`Data has been appended`);
     })
 };
 
@@ -80,7 +80,7 @@ const copyFile = (fileName) => {
 copyFile('data.txt');
 */
 
-
+/*
 console.log('P Q3')
 const post = {
     title: "JavaScript Basics",
@@ -100,6 +100,57 @@ const createPost = (post) => {
 };
 
 createPost(post);
+*/
+
+/*
+console.log('P Q4')
+const newPost = {
+    // the post id that we want to update, change it when trying to update another post
+    id: 1,
+    title: "Updated Title",
+    body: "Updated body",
+    userId: 1,
+};
+
+const updatePost = (postId, data) => {
+    axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`,data)
+    .then((res)=>{
+        console.log(res.data)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+};
+
+updatePost(1, newPost);
+*/
+
+
+console.log('P Q5')
+const getUsers = async() => {
+    try {
+        const users = await axios.get("https://jsonplaceholder.typicode.com/users")
+        
+        return users;
+    } catch (error) {
+        throw error;
+    }
+};
+
+//getUsers();
 
 
 
+console.log('P Q6')
+const saveUsers = async() => {
+    const users = await getUsers();
+    const data = json.stringify(users);
+    fs.writeFile("users.txt", data, (err) => {
+        if (err) {
+            throw err
+        }
+        console.log('File has been saved!')
+    });
+};
+
+saveUsers();
