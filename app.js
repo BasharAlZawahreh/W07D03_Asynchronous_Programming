@@ -128,13 +128,14 @@ updatePost(1, newPost);
 
 console.log('P Q5')
 const getUsers = async() => {
+    let users;
     try {
-        const users = await axios.get("https://jsonplaceholder.typicode.com/users")
+         users = await axios.get("https://jsonplaceholder.typicode.com/users")        
         
-        return users;
     } catch (error) {
         throw error;
     }
+    return users;
 };
 
 //getUsers();
@@ -144,11 +145,10 @@ const getUsers = async() => {
 console.log('P Q6')
 const saveUsers = async() => {
     const users = await getUsers();
-    const data = json.stringify(users);
-    fs.writeFile("users.txt", data, (err) => {
-        if (err) {
-            throw err
-        }
+    fs.writeFileSync("users.txt", JSON.stringify(users.data), (err) => {
+         if (err) {
+             throw err
+         }
         console.log('File has been saved!')
     });
 };
